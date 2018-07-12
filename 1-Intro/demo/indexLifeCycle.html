@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <div id='app'></div>
+
+  <script src="https://fb.me/react-15.0.0.js"></script>
+  <script src="https://fb.me/react-dom-15.0.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+  
+    class Numero extends React.Component {
+      constructor(props) {
+        super(props);
+      }
+      componentWillMount() {
+        console.log('Voy a estar en el DOM!');
+        console.log(document.querySelector('#numero'));
+      }
+      componentDidMount() {
+        console.log('Estoy en el DOM');
+        console.log(document.querySelector('#numero'));
+      }
+      componentWillReceiveProps(nextProps) {
+        console.log('Recibi nuevas props:', nextProps);
+        console.log(document.querySelector('#numero').innerText);
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.numero > 10) {
+          return false;
+        }
+        return true;
+      }
+      componentWillUpdate(nextProps, nextState) {
+        console.log('Me voy a actualizar:', nextProps);
+        console.log(document.querySelector('#numero').innerText);
+      }
+      componentDidUpdate(prevProps, prevState) {
+        console.log('Ya me actualicé:', prevProps);
+        console.log(document.querySelector('#numero').innerText);
+      
+      }
+      render() {
+        console.log('renderié, vieja!');
+        return (
+          <div id="numero">
+            {this.props.numero}
+          </div>
+        );
+      }
+    };
+
+  class Contador extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {contador: this.props.contador}
+      this.onButtonClick = this.onButtonClick.bind(this);
+    }
+    onButtonClick(e){
+      e.preventDefault();
+      this.setState({
+        contador: this.state.contador + 1,
+      });
+    }
+    render(){
+      return (
+        <div>
+         <button onClick={this.onButtonClick}>Suma uno!</button>
+         <Numero numero={this.state.contador} />
+        </div>  
+      )
+    }
+  };
+  ReactDOM.render(<Contador contador={0} />, document.getElementById('app'));
+  </script>
+</body>
+</html>

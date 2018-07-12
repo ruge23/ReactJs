@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <div id='app'></div>
+
+  <script src="https://fb.me/react-15.0.0.js"></script>
+  <script src="https://fb.me/react-dom-15.0.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+    
+    class Rodri extends React.Component {
+      render() {
+        if (this.props.hola === 'Toni') {
+           return (<p>Aguente React</p>);
+        } else {
+          return (
+           <p>Hola, {this.props.name} {this.props.apellido} {1+1}!</p>
+          );
+        }
+      }
+    }
+    
+    class HelloWorld extends React.Component {
+      render() {
+        return (
+          <div>
+            <p>Hola, Guido!!</p>
+            <Rodri  name="Rodri" apellido="Ruiz" hola="hola"/>
+          </div>
+        )
+      }
+    };
+
+    class Lista extends React.Component {
+      render() {
+        return (
+          <div>
+            {this.props.items.map(function(elem, i) {
+              return (
+                <p key={elem.id}>{elem.name}</p>
+              );
+            })}
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Lista items={[{id: 'a', name:'Gon'}, {id: 'b', name:'Zeque'}]} />, document.getElementById('app'));
+  </script>
+</body>
+</html>

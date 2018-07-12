@@ -1,0 +1,11 @@
+.prueba {
+	background-color: salmon;
+}
+
+.title {
+  color: blue;
+}
+
+.size {
+  font-size: 30px;
+}

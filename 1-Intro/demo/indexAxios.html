@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+  <div id='app'></div>
+
+  <script src="https://fb.me/react-15.0.0.js"></script>
+  <script src="https://fb.me/react-dom-15.0.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/babel">
+  
+    // Pure Component
+    function Post(props) {
+      return (
+        <div>
+          <h3>{props.title}</h3>
+          <p>{props.body}</p>
+        </div>
+      );
+    };
+
+  class PostSearch extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        body: '',
+        title: '',
+      };
+      this.onButtonClick = this.onButtonClick.bind(this);
+    }
+    onButtonClick(e){
+      e.preventDefault();
+      var index = document.querySelector('#index').value;
+      axios.get(`https://jsonplaceholder.typicode.com/posts/${index}`)
+        .then((response) => {
+          console.log(response);
+          this.setState({
+            body: response.data.body,
+            title: response.data.title,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    render(){
+      return (
+        <div>
+          <form onSubmit={this.onButtonClick}>
+            <input type='text' id='index'/>
+            <button>get Post!</button>
+          </form>
+          <Post
+            body={this.state.body}
+            title={this.state.title}
+          />
+        </div>  
+      )
+    }
+  };
+  ReactDOM.render(<PostSearch />, document.getElementById('app'));
+  </script>
+</body>
+</html>
